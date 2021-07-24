@@ -224,7 +224,7 @@ contains
           k12=this%ind(ba%i1,kp,ba%i3)%i!tc(ba%i1,kp,ba%i3)%i
           
           IP= bub%IP(kp,qp)
-          IP2= bub%IP(kp,-qp)
+          IP2= IP!bub%IP(kp,-qp)
           IC= bub%IC(kp,qc)
           IPP=bub%IP(kp,qpp)
           

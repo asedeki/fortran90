@@ -21,7 +21,6 @@ program test
   end if
   !call f1D
   call q%End
-  open (unit=1232,file="Fini",action="write",status="unknown")
 contains
   subroutine flow_Temp
     implicit none
@@ -40,8 +39,7 @@ contains
        else
           
           !if(dT/q%Temperature<=1E-2)then
-          print*,"dT avant=",dT,(dT<=0.01),(abs(dT-0.001)<=1E-6)
-          if(abs(dT-0.001)<=1E-6)then
+          if(abs(dT-0.01)<=1E-6)then
              write(1,'(f9.6,2x,e13.4)')q%t_perp2,q%Temperature
              exit
           else

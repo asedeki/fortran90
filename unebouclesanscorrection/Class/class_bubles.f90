@@ -164,9 +164,7 @@ contains
       arg1 = 0.5_wp*this%E0/this%Temperature
       do i=1,2
          arg2 = 0.5_wp*this%E0/this%Temperature + mu*0.5_wp*A/this%Temperature
-         !call nickel_calcul(res,arg1,arg2)
-         call nickelThanh(res,arg1,arg2)
-         
+         res = (tanh(arg1)+tanh(arg2))/(1.0_wp+arg2/arg1)
          yp = yp + theta(abs(this%E0+mu*A)-this%E0)*res
          mu = -1
       end do
