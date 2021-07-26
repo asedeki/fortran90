@@ -156,28 +156,27 @@ contains
     end do
   end subroutine initialization
   
-  function Int_pack(this,ch) result(y)
-    implicit none
-    class(interaction) :: this
-    character(*),optional::ch
-    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    real(kind=wp),allocatable::y(:)
-    integer:: sizeg1,k
+  subroutine Int_pack(this, y, ch)
+   implicit none
+   class(interaction) :: this
+   real ( kind = wp ) :: y(:)
+   character(*),optional::ch
 
-    allocate(y(this%Neq))
-    
-    k=1
-    sizeg1=this%Neq/3
-    if(present(ch))then
-       y(k:sizeg1) = this%g(:)%dg1; k=k+sizeg1
-       y(k:k+sizeg1-1) = this%g(:)%dg2;k=k+sizeg1
-       y(k:k+sizeg1-1) = this%g(:)%dg3;k=k+sizeg1
-    else
-       y(k:sizeg1) = this%g(:)%g1; k=k+sizeg1
-       y(k:k+sizeg1-1) = this%g(:)%g2;k=k+sizeg1
-       y(k:k+sizeg1-1) = this%g(:)%g3;k=k+sizeg1
-    end if
-  end function Int_pack
+   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+   
+   integer:: sizeg1,k      
+   k=1
+   sizeg1=this%Neq/3
+   if(present(ch))then
+      y(k:sizeg1) = this%g(:)%dg1; k=k+sizeg1
+      y(k:k+sizeg1-1) = this%g(:)%dg2;k=k+sizeg1
+      y(k:k+sizeg1-1) = this%g(:)%dg3;k=k+sizeg1
+   else
+      y(k:sizeg1) = this%g(:)%g1; k=k+sizeg1
+      y(k:k+sizeg1-1) = this%g(:)%g2;k=k+sizeg1
+      y(k:k+sizeg1-1) = this%g(:)%g3;k=k+sizeg1
+   end if
+  end subroutine Int_pack
   subroutine Int_unpack(this,y)
     implicit none
     class(interaction) :: this

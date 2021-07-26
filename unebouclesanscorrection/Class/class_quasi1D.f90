@@ -96,10 +96,8 @@ contains
     
     new_quasi1D%b=buble(new_quasi1D%sys)
     
-    val=1.0
-    new_quasi1D%RF=ResponseFunction(new_quasi1D%sys%in%N_patche,val)
-    val=0.0
-    new_quasi1D%deriv_RF=ResponseFunction(new_quasi1D%sys%in%N_patche,val)
+    new_quasi1D%RF=ResponseFunction(new_quasi1D%sys%in%N_patche,1.0_wp)
+    new_quasi1D%deriv_RF=ResponseFunction(new_quasi1D%sys%in%N_patche,0.0_wp)
     new_quasi1D%FE=FreeEnergie()
     new_quasi1D%Nequations=new_quasi1D%interaction%Neq+new_quasi1D%RF%Neq&
          +new_quasi1D%FE%Neq
@@ -199,11 +197,11 @@ contains
     !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     
     if(present(ch))then
-       y(1:this%interaction%Neq)=this%interaction%Int_pack(ch)
+       call this%interaction%Int_pack(y, ch)
        y(this%interaction%Neq+1:this%Nequations-this%FE%Neq)=this%deriv_RF%RF_pack()
        y(this%Nequations)=this%FE%FE_pack(ch)
     else
-       y(1:this%interaction%Neq)=this%interaction%Int_pack()
+       call this%interaction%Int_pack(y)
        y(this%interaction%Neq+1:this%Nequations-this%FE%Neq)=this%RF%RF_pack()
        y(this%Nequations)=this%FE%FE_pack()
     end if
