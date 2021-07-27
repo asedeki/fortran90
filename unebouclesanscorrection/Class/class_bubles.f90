@@ -6,7 +6,7 @@ module class_bubles
   implicit none
   type, public :: buble
      real(kind = wp),allocatable::IP(:,:),IC(:,:)
-     real(kind = wp)::vec,t_perp_ini=0.0,t_perp2_ini=0.0
+     real(kind = wp)::vec,t_perp=0.0,t_perp2=0.0
      real(kind = wp)::E0=0.0,Temperature=0.0
      integer::N_patche
    contains
@@ -51,8 +51,8 @@ contains
     integer :: kp,qp,k1,sigma,i_inf,i_sup
     character(6)::typ(2)
     
-    this%t_perp_ini=tpi
-    this%t_perp2_ini=tp2i
+    this%t_perp=tpi
+    this%t_perp2=tp2i
     this%Temperature=Temp
     typ(1)="C";typ(2)="P"
     E=this%E0
@@ -89,8 +89,8 @@ contains
     integer :: kp,qp,k1,sigma,i_inf,i_sup
     character(6)::typ(2)
     
-    this%t_perp_ini=tpi
-    this%t_perp2_ini=tp2i
+    this%t_perp=tpi
+    this%t_perp2=tp2i
     this%Temperature=Temp
     typ(1)="C";typ(2)="P"
     E=this%E0
@@ -178,14 +178,14 @@ contains
     
     select case(typ)
     case('P')
-       Eperp= 2*this%t_perp_ini*cos(k_perp*this%vec) + 2*this%t_perp2_ini*cos(2*k_perp*this%vec)&
-            +2*this%t_perp_ini*cos( (q_perp+k_perp)*this%vec) +&
-            2*this%t_perp2_ini*cos(2*(q_perp+k_perp)*this%vec)
+       Eperp= 2*this%t_perp*cos(k_perp*this%vec) + 2*this%t_perp2*cos(2*k_perp*this%vec)&
+            +2*this%t_perp*cos( (q_perp+k_perp)*this%vec) +&
+            2*this%t_perp2*cos(2*(q_perp+k_perp)*this%vec)
               
     case('C')
-       Eperp= 2*this%t_perp_ini*cos(k_perp*this%vec) + 2*this%t_perp2_ini*cos(2*k_perp*this%vec)&
-            -2*this%t_perp_ini*cos( (q_perp-k_perp)*this%vec) -&
-            2*this%t_perp2_ini*cos(2*(q_perp-k_perp)*this%vec)
+       Eperp= 2*this%t_perp*cos(k_perp*this%vec) + 2*this%t_perp2*cos(2*k_perp*this%vec)&
+            -2*this%t_perp*cos( (q_perp-k_perp)*this%vec) -&
+            2*this%t_perp2*cos(2*(q_perp-k_perp)*this%vec)
     end select
   end function EPERP
 end module class_bubles

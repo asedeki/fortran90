@@ -59,18 +59,18 @@ module class_interaction
      integer::Neq
      
    contains
-    procedure::initialization
-    procedure::Int_pack
-    procedure::Int_unpack
-    procedure::IntDerivative
-    procedure :: assign
-    procedure :: InteractionWrite
-    generic :: assignment(=) => assign
-    !generic :: operator(+) => add
- end type interaction
- interface interaction
-    module procedure new_interaction
- end interface interaction
+     procedure::initialization
+     procedure::Int_pack
+     procedure::Int_unpack
+     procedure::IntDerivative
+     procedure :: assign
+     procedure :: InteractionWrite
+     generic :: assignment(=) => assign
+     !generic :: operator(+) => add
+  end type interaction
+  interface interaction
+     module procedure new_interaction
+  end interface interaction
 contains
   subroutine assign(to, from)
     class(interaction), intent(out) :: to
@@ -157,25 +157,25 @@ contains
   end subroutine initialization
   
   subroutine Int_pack(this, y, ch)
-   implicit none
-   class(interaction) :: this
-   real ( kind = wp ) :: y(:)
-   character(*),optional::ch
+    implicit none
+    class(interaction) :: this
+    real ( kind = wp ) :: y(:)
+    character(*),optional::ch
 
-   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   
-   integer:: sizeg1,k      
-   k=1
-   sizeg1=this%Neq/3
-   if(present(ch))then
-      y(k:sizeg1) = this%g(:)%dg1; k=k+sizeg1
-      y(k:k+sizeg1-1) = this%g(:)%dg2;k=k+sizeg1
-      y(k:k+sizeg1-1) = this%g(:)%dg3;k=k+sizeg1
-   else
-      y(k:sizeg1) = this%g(:)%g1; k=k+sizeg1
-      y(k:k+sizeg1-1) = this%g(:)%g2;k=k+sizeg1
-      y(k:k+sizeg1-1) = this%g(:)%g3;k=k+sizeg1
-   end if
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    integer:: sizeg1,k      
+    k=1
+    sizeg1=this%Neq/3
+    if(present(ch))then
+       y(k:sizeg1) = this%g(:)%dg1; k=k+sizeg1
+       y(k:k+sizeg1-1) = this%g(:)%dg2;k=k+sizeg1
+       y(k:k+sizeg1-1) = this%g(:)%dg3;k=k+sizeg1
+    else
+       y(k:sizeg1) = this%g(:)%g1; k=k+sizeg1
+       y(k:k+sizeg1-1) = this%g(:)%g2;k=k+sizeg1
+       y(k:k+sizeg1-1) = this%g(:)%g3;k=k+sizeg1
+    end if
   end subroutine Int_pack
   subroutine Int_unpack(this,y)
     implicit none
@@ -270,5 +270,5 @@ contains
     write(out%fgmoy,'(f7.4,2x,f14.5,2x,e13.4,2x,e13.4,2x,e13.4,2x,e13.4)') tp2,T,g1,g2,g3
     
   end subroutine InteractionWrite
-
+  
 end module class_interaction
